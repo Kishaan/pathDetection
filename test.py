@@ -47,12 +47,12 @@ img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
 show_image(img, "normal")
 kernel = np.ones((3,3), np.uint8)
 # img_dilation3 = cv2.imread(file)
-img_dilation = cv2.erode(img, kernel, iterations=1)
-# img_dilation = cv2.dilate(img, kernel, iterations=1)
+# img_dilation = cv2.erode(img, kernel, iterations=1)
+img_dilation = cv2.dilate(img, kernel, iterations=1)
 ret,img_dilation = cv2.threshold(img_dilation,127,255,cv2.THRESH_BINARY)
 # show_image(img, "dilate")
 
-img_dilation = cv2.bitwise_not(img_dilation)
+# img_dilation = cv2.bitwise_not(img_dilation)
 
 show_image(img_dilation, "threshold")
 
@@ -76,26 +76,26 @@ show_image(img_dilation, "threshold")
 
 # ================================================
 
-# dst = cv2.cornerHarris(img_dilation, 7, 5, 0.04)
-# show_image(dst, "corners")
+dst = cv2.cornerHarris(img_dilation, 7, 5, 0.04)
+show_image(dst, "corners")
 
 # ========= Blob detection ========================
-detector = cv2.SimpleBlobDetector_create()
+# detector = cv2.SimpleBlobDetector_create()
  
-# Detect blobs.
-keypoints = detector.detect(img_dilation)
-# print len(keypoints)
-# Draw detected blobs as red circles.
-# cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
-im_with_keypoints = cv2.drawKeypoints(img_dilation, keypoints, np.array([]), (50,0,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+# # Detect blobs.
+# keypoints = detector.detect(img_dilation)
+# # print len(keypoints)
+# # Draw detected blobs as red circles.
+# # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
+# im_with_keypoints = cv2.drawKeypoints(img_dilation, keypoints, np.array([]), (255,0,0), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-show_image(im_with_keypoints, "blob")
+# show_image(im_with_keypoints, "blob")
  
-img = img_dilation.copy()
-for x in range(1,len(keypoints)):
-  img=cv2.circle(img, (np.int(keypoints[x].pt[0]),np.int(keypoints[x].pt[1])), radius=np.int(keypoints[x].size), color=(50), thickness=-1)
+# img = img_dilation.copy()
+# for x in range(1,len(keypoints)):
+#   img=cv2.circle(img, (np.int(keypoints[x].pt[0]),np.int(keypoints[x].pt[1])), radius=np.int(keypoints[x].size), color=(50), thickness=-1)
 
-show_image(img, "blob")
+# show_image(img, "blob")
 # img = img_dilation.copy()
 # # img = cv2.bitwise_not(img)
 
